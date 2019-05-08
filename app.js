@@ -58,9 +58,6 @@ async function validateCaptcha(ctx) {
 
 async function generateCaptcha(conf, type) {
   let c = type == 'pic' ? svgCaptcha.create(conf) : svgCaptcha.createMathExpr(conf);
-  let pid = crypto
-    .createHash('md5')
-    .update(c.data)
-    .digest('hex');
+  let pid = crypto.randomBytes(16).toString('hex');
   return { pid, text: c.text, svg: c.data };
 }
