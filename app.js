@@ -30,11 +30,11 @@ app.listen(3000, err => {
 });
 
 async function getCaptcha(ctx) {
-  let type = captcha_conf.type;
+  let { type, expire } = captcha_conf;
   let cap = await generateCaptcha(captcha_conf[type], type);
   // 增加 存储到 redis 步骤
   let { pid, text, svg } = cap;
-  let set_res = await redis.set(pid, text);
+  let set_res = await redis.setex(pid, expire, text);
   if (set_res != 'OK') console.log('set cap to redis failed');
   console.log('set cap to redis success');
   ctx.body = { pid, svg };

@@ -1,5 +1,6 @@
 module.exports = {
   type: 'math',
+  expire: 60,
   pic: {
     size: 4,
     ignoreChars: '0o1i',
